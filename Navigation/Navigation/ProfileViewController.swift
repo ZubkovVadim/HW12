@@ -1,19 +1,18 @@
 import UIKit
 import StorageService
+import iOSIntPackage
 
 class ProfileViewController: UIViewController {
     
     var userService: UserService
     var userName: String
     var user: User?
-    
-    
+
     let tableView = UITableView(frame: .zero, style: .plain)
     let cellIDPosts = "CellIDPosts"
     let cellIDPhotos = "CellIDPhotos"
     let allPosts = Storage.posts
     let photos = PhotosStorage.photos
-    
     init(userService: UserService, userName: String ) {
         self.userService = userService
         self.userName = userName
@@ -59,6 +58,7 @@ class ProfileViewController: UIViewController {
 
 
 extension ProfileViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIDPosts) as! PostTableViewCell

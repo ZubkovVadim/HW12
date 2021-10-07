@@ -5,9 +5,9 @@ import UIKit
 import StorageService
 
 class PhotosCollectionViewCell: UICollectionViewCell {
-    var photo: Photos?{
+    var photo: UIImage? {
         didSet{
-            photosUIImageView.image = UIImage (named: photo!.image)
+            photosUIImageView.image = photo
         }
     }
     let photosUIImageView: UIImageView = {
@@ -26,9 +26,6 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         photosUIImageView.frame = bounds
         photosUIImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        
-        
-//        setUpConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -39,13 +36,4 @@ extension PhotosCollectionViewCell {
     func setUpViews() {
         contentView.addSubview(photosUIImageView)
     }
-//    func setUpConstraints () {
-//        _ = [
-//            photosUIImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 8),
-//            photosUIImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-//            photosUIImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-//            photosUIImageView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8)
-//        ]
-//        NSLayoutConstraint.activate(constraints)
-//    }
 }

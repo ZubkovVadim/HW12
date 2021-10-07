@@ -7,6 +7,7 @@ class PostTableViewCell: UITableViewCell {
     
     var imageFilter = ImageProcessor()
     
+    
     var post: PostModel?{
         didSet{
             imagePostUIImageView.image = UIImage (named: post!.image)

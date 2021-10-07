@@ -7,7 +7,6 @@ public struct PostModel {
     public var discription: String? = nil
     public var likes: Int
     public var views: Int
-//    public var filter: CIFilter
     
 }
 
@@ -17,7 +16,6 @@ public struct Storage {
                                   discription: "New teasers of the 2 season of vedmak",
                                   likes: 222,
                                   views: 323),
-//                                  filter: .init(name: "CISepiaTone")!),
                         PostModel(author: "netology", image: "netology", discription: "Это быстро: вам потребуется меньше одного года, чтобы освоить новую востребованную профессию.Каждый выпускник получит консультацию с персональными рекомендациями от HR-специалиста red_mad_robot и возможность трудоустройства или участия в стажировке. При успешном прохождении вам предложат вакансию в группе компаний red_mad_robot в одном из городов (Москва, Санкт-Петербург, Новосибирск, Калининград, Ярославль, Томск, Самара, Тольятти, Иннополис, Киев) или в компаниях-клиентах red_mad_robot. Выпускники с хорошими результатами, но которым ещё нужно попрактиковаться, смогут попасть на стажировку в red_mad_robot в одном из городов.",
                                   likes: 343,
                                   views: 222),
@@ -32,7 +30,6 @@ public struct Storage {
                                   discription: "Основатель компании Amazon и самый богатый человек в мире Джефф Безос во вторник успешно слетал в космос на корабле New Shepard, который построила его компания Blue Origin.",
                                   likes: 655,
                                   views: 788)
-//                                  filter: .init(name: "CIPhotoEffectChrome")!)
                         
                     ]
 }

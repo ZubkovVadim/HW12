@@ -1,6 +1,7 @@
 
 import Foundation
 import UIKit
+//import iOSIntPackage
 
 public struct Photos {
    public let image: String

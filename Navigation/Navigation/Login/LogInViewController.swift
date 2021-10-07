@@ -208,8 +208,8 @@ class LogInViewController: UIViewController {
 class Checker {
     static let shared = Checker()
     
-    private let login: String = "Vasily"
-    private let pswrd: String = "StrongPassword"
+    private let login: String = "1"
+    private let pswrd: String = "1"
     
     func check(userName: String, password: String) -> Bool {
         return userName == login && password == pswrd
