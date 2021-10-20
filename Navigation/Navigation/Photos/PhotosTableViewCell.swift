@@ -5,7 +5,7 @@ import StorageService
 
 class PhotosTableViewCell: UITableViewCell {
     var openPhotosViewController:(() -> Void)?
-    
+    var onOrganizeTapButton: (() -> Void)?
     var photo: [Photos] = [] {
         didSet{
             stackPhotoView.arrangedSubviews.forEach { view in
@@ -45,16 +45,17 @@ class PhotosTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var photoButton: UIButton = {
-        var button = UIButton(type: .system)
+   private lazy var photoButton: CustomButton = {
+        var button = CustomButton(title: nil, titleColor: nil, backgroundColor: nil, backgroundImage: UIImage(systemName: "arrowshape.turn.up.forward.circle"), onOrganizeTapButton: onOrganizeTapButton!)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "arrowshape.turn.up.forward.circle"), for: .normal)
-        button.addTarget(self, action: #selector(tap), for: .touchUpInside)
+//        button.setImage(UIImage(systemName: "arrowshape.turn.up.forward.circle"), for: .normal)
+//        button.addTarget(self, action: #selector(tap), for: .touchUpInside)
         return button
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        tap()
         setUpViews()
         setUpConstraints()
     }
@@ -96,8 +97,11 @@ extension PhotosTableViewCell {
         ]
         NSLayoutConstraint.activate(constraints)
     }
-    @objc func tap() {
-        openPhotosViewController?()
+    func tap() {
+        onOrganizeTapButton = { [weak self] in
+            guard let self = self else {return}
+            self.openPhotosViewController?()
         print ("taped")
     }
+}
 }

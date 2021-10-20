@@ -1,5 +1,3 @@
-
-
 import UIKit
 import StorageService
 
@@ -84,6 +82,7 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
         scrollView.keyboardDismissMode = .onDrag
@@ -239,6 +238,7 @@ class MyLoginFactory: LoginFactory {
         return loginInspector
     }
 }
+
 
 
 

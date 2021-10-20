@@ -11,7 +11,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             statusLabel.text = user?.status
         }
     }
-        
+    private var onOrganizeTapButton: (() -> Void)?
+    
     private let headerImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleToFill
@@ -25,19 +26,16 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
       
         return iv
     }()
-    let setStatusButton: UIButton = {
-        let button = UIButton(type: .system)
+    private lazy var setStatusButton: CustomButton = {
+        let button = CustomButton(title: "Show status", titleColor: .white, backgroundColor: .blue, backgroundImage: nil, onOrganizeTapButton: onOrganizeTapButton!)
         button.layer.shadowColor = UIColor.black.cgColor
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 14
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowRadius = 4
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.7
-        button.setTitle("Show status", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.isEnabled = false
         return button
     }()
@@ -81,7 +79,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     override init(reuseIdentifier: String?) {
             super.init(reuseIdentifier: reuseIdentifier)
+        setUpUI()
         setUpView()
+        
     }
     func setUpView() {
         contentView.addSubview(headerImageView)
@@ -128,9 +128,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         required init?(coder: NSCoder) {
             super.init(coder: coder)
         }
-    @objc func buttonPressed(_ sender: Any) {
-         statusLabel.text = statusTextField.text
-     }
+    func setUpUI() {
+        onOrganizeTapButton = { [weak self] in
+            guard let self = self else {return}
+            self.statusLabel.text = self.statusTextField.text
+    }
+    }
+//    @objc func buttonPressed(_ sender: Any) {
+//         statusLabel.text = statusTextField.text
+//     }
     @objc func statusTextFieldDidChange () {
             if statusTextField.text!.isEmpty {
                 setStatusButton.isEnabled = false
