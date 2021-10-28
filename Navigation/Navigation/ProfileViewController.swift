@@ -3,6 +3,8 @@ import StorageService
 import iOSIntPackage
 
 class ProfileViewController: UIViewController {
+    var onModuleFinish: (() -> Void)?
+    
     
     var userService: UserService
     var userName: String
@@ -13,6 +15,7 @@ class ProfileViewController: UIViewController {
     let cellIDPhotos = "CellIDPhotos"
     let allPosts = Storage.posts
     let photos = PhotosStorage.photos
+    
     init(userService: UserService, userName: String ) {
         self.userService = userService
         self.userName = userName

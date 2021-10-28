@@ -51,6 +51,16 @@
 		DD554A9D27104CDE0089A52C /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD554A9C27104CDE0089A52C /* CustomButton.swift */; };
 		DD74D35E2720040000D752A2 /* CheckerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D35D2720040000D752A2 /* CheckerModel.swift */; };
 		DD74D35F272005F600D752A2 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD554A9C27104CDE0089A52C /* CustomButton.swift */; };
+		DD74D3612726D77E00D752A2 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D3602726D77E00D752A2 /* LoginCoordinator.swift */; };
+		DD74D3622726D77E00D752A2 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D3602726D77E00D752A2 /* LoginCoordinator.swift */; };
+		DD74D3652726DCC500D752A2 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D3642726DCC500D752A2 /* AppCoordinator.swift */; };
+		DD74D3662726DCC500D752A2 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D3642726DCC500D752A2 /* AppCoordinator.swift */; };
+		DD74D3682726E33100D752A2 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D3672726E33100D752A2 /* FeedCoordinator.swift */; };
+		DD74D3692726E33100D752A2 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D3672726E33100D752A2 /* FeedCoordinator.swift */; };
+		DD74D36B27296B9C00D752A2 /* CoordinatorProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D36A27296B9C00D752A2 /* CoordinatorProtocols.swift */; };
+		DD74D36C27296B9C00D752A2 /* CoordinatorProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D36A27296B9C00D752A2 /* CoordinatorProtocols.swift */; };
+		DD74D36E2729D06D00D752A2 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D36D2729D06D00D752A2 /* ModelFactory.swift */; };
+		DD74D370272AF10B00D752A2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD74D36F272AF10B00D752A2 /* CustomTextField.swift */; };
 		DD80987D26FB4A6C009FE66E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD80987A26F9FAEB009FE66E /* User.swift */; };
 		DD80987F26FCB23C009FE66E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD80987E26FCB23C009FE66E /* UserService.swift */; };
 /* End PBXBuildFile section */
@@ -128,6 +138,12 @@
 		DD54413B26F11DEA00544E4E /* Navigation-Debug-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Navigation-Debug-Info.plist"; sourceTree = "<group>"; };
 		DD554A9C27104CDE0089A52C /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		DD74D35D2720040000D752A2 /* CheckerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerModel.swift; sourceTree = "<group>"; };
+		DD74D3602726D77E00D752A2 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		DD74D3642726DCC500D752A2 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		DD74D3672726E33100D752A2 /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
+		DD74D36A27296B9C00D752A2 /* CoordinatorProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocols.swift; sourceTree = "<group>"; };
+		DD74D36D2729D06D00D752A2 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
+		DD74D36F272AF10B00D752A2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		DD80987A26F9FAEB009FE66E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DD80987E26FCB23C009FE66E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		DF63C3D9933A2F7EDD524636 /* Pods_Navigation_Debug.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Debug.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,7 +222,9 @@
 				060782BC250CE27A00A87020 /* LaunchScreen.storyboard */,
 				060782BF250CE27A00A87020 /* Info.plist */,
 				060782C5250CEB0A00A87020 /* InfoViewController.swift */,
+				DD74D36F272AF10B00D752A2 /* CustomTextField.swift */,
 				DD554A9C27104CDE0089A52C /* CustomButton.swift */,
+				DD74D3632726DC9A00D752A2 /* Coordinators */,
 				DD05CE7A26A9670C007A187F /* Photos */,
 				DD05CE7726A8016F007A187F /* Login */,
 				DD068F43269E1914007DA5B9 /* Post */,
@@ -257,15 +275,27 @@
 		DD5440E026EF71FF00544E4E /* StorageService */ = {
 			isa = PBXGroup;
 			children = (
+				DD74D35D2720040000D752A2 /* CheckerModel.swift */,
 				DD80987A26F9FAEB009FE66E /* User.swift */,
 				DD80987E26FCB23C009FE66E /* UserService.swift */,
 				DD068F3F269E06B9007DA5B9 /* PostModel.swift */,
 				DD05CE7D26A96A90007A187F /* Photos.swift */,
 				DD5440E126EF71FF00544E4E /* StorageService.h */,
 				DD5440E226EF71FF00544E4E /* Info.plist */,
-				DD74D35D2720040000D752A2 /* CheckerModel.swift */,
 			);
 			path = StorageService;
+			sourceTree = "<group>";
+		};
+		DD74D3632726DC9A00D752A2 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				DD74D36A27296B9C00D752A2 /* CoordinatorProtocols.swift */,
+				DD74D3642726DCC500D752A2 /* AppCoordinator.swift */,
+				DD74D3602726D77E00D752A2 /* LoginCoordinator.swift */,
+				DD74D3672726E33100D752A2 /* FeedCoordinator.swift */,
+				DD74D36D2729D06D00D752A2 /* ModelFactory.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		DDF02C4F268B5DCF00D00C20 /* Profile */ = {
@@ -515,16 +545,22 @@
 				DD05CE7926A8793B007A187F /* PhotosTableViewCell.swift in Sources */,
 				DD05CE7C26A96754007A187F /* PhotosViewController.swift in Sources */,
 				DD068F45269E197A007DA5B9 /* PostTableViewCell.swift in Sources */,
+				DD74D36E2729D06D00D752A2 /* ModelFactory.swift in Sources */,
+				DD74D370272AF10B00D752A2 /* CustomTextField.swift in Sources */,
 				060782B6250CE27700A87020 /* FeedViewController.swift in Sources */,
+				DD74D3682726E33100D752A2 /* FeedCoordinator.swift in Sources */,
+				DD74D3652726DCC500D752A2 /* AppCoordinator.swift in Sources */,
 				DD554A9D27104CDE0089A52C /* CustomButton.swift in Sources */,
 				060782B2250CE27700A87020 /* AppDelegate.swift in Sources */,
 				DD47C84B2698DF6300911782 /* LogInViewController.swift in Sources */,
 				060782C6250CEB0A00A87020 /* InfoViewController.swift in Sources */,
 				060782CA250CEE7200A87020 /* Post.swift in Sources */,
 				DD160B38268B647E00B798A5 /* ProfileHeaderView.swift in Sources */,
+				DD74D36B27296B9C00D752A2 /* CoordinatorProtocols.swift in Sources */,
 				DD05CE8026A97EA7007A187F /* PhotosCollectionViewCell.swift in Sources */,
 				060782B4250CE27700A87020 /* SceneDelegate.swift in Sources */,
 				DD160B3A268B64B700B798A5 /* ProfileViewController.swift in Sources */,
+				DD74D3612726D77E00D752A2 /* LoginCoordinator.swift in Sources */,
 				060782C8250CEE5D00A87020 /* PostViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,15 +585,19 @@
 				DD54412326F11DEA00544E4E /* PhotosViewController.swift in Sources */,
 				DD54412426F11DEA00544E4E /* PostTableViewCell.swift in Sources */,
 				DD54412526F11DEA00544E4E /* FeedViewController.swift in Sources */,
+				DD74D3692726E33100D752A2 /* FeedCoordinator.swift in Sources */,
+				DD74D3662726DCC500D752A2 /* AppCoordinator.swift in Sources */,
 				DD74D35F272005F600D752A2 /* CustomButton.swift in Sources */,
 				DD54412626F11DEA00544E4E /* AppDelegate.swift in Sources */,
 				DD54412726F11DEA00544E4E /* LogInViewController.swift in Sources */,
 				DD54412826F11DEA00544E4E /* InfoViewController.swift in Sources */,
 				DD54412926F11DEA00544E4E /* Post.swift in Sources */,
 				DD54412A26F11DEA00544E4E /* ProfileHeaderView.swift in Sources */,
+				DD74D36C27296B9C00D752A2 /* CoordinatorProtocols.swift in Sources */,
 				DD54412B26F11DEA00544E4E /* PhotosCollectionViewCell.swift in Sources */,
 				DD54412C26F11DEA00544E4E /* SceneDelegate.swift in Sources */,
 				DD54412D26F11DEA00544E4E /* ProfileViewController.swift in Sources */,
+				DD74D3622726D77E00D752A2 /* LoginCoordinator.swift in Sources */,
 				DD54412E26F11DEA00544E4E /* PostViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

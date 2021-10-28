@@ -3,6 +3,10 @@ import StorageService
 
 class LogInViewController: UIViewController {
     
+    weak var coordinator: LoginCoordinator?
+    var onModuleFinish: ((String) -> Void)?
+    
+    
     weak var delegate: LogInViewControllerDelegate?
     weak var checker: Checker?
     
@@ -178,17 +182,14 @@ class LogInViewController: UIViewController {
         let vc = ProfileViewController(userService: userService , userName: userNameTextField.text!)
         
         if delegate?.didTappedLoginButton(loginName: userNameTextField.text!, loginPassword: passwordTextField.text!) == true {
-            self.navigationController?.pushViewController(vc, animated: true)}
-        else {
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
             return
         }
         #else
-        let userService = CurrentUserService()
-        let vc = ProfileViewController(userService: userService , userName: userNameTextField.text!)
-        
         if delegate?.didTappedLoginButton(loginName: userNameTextField.text!, loginPassword: passwordTextField.text!) == true {
-            self.navigationController?.pushViewController(vc, animated: true)}
-        else {
+            onModuleFinish?(userNameTextField.text!)
+        } else {
             return
         }
         #endif
@@ -238,7 +239,4 @@ class MyLoginFactory: LoginFactory {
         return loginInspector
     }
 }
-
-
-
 

@@ -7,7 +7,7 @@ class CustomButton: UIButton {
 
     init(title: String?, titleColor: UIColor?, backgroundColor: UIColor?, backgroundImage: UIImage?, onOrganizeTapButton: @escaping () -> Void) {
         self.onOrganizeTapButton = onOrganizeTapButton
-        super .init(frame: .zero)
+        super.init(frame: .zero)
         
         self.setTitle(title, for: .normal)
         self.setTitleColor(titleColor, for: .normal)

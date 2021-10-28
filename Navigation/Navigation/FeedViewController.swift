@@ -2,8 +2,11 @@ import UIKit
 import SnapKit
 import StorageService
 
-class FeedViewController: UIViewController {
-    
+class FeedViewController: UIViewController{
+    var checkerModel = CheckerModel()
+    var coordinator: FeedCoordinator?
+    var onModuleFinish: (() -> Void)?
+    var onOrganizeTapButton: (() -> Void)?
     
     //    let post: Post = Post(title: "Пост")
     let checkLabel: UILabel = {
@@ -12,25 +15,24 @@ class FeedViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    let checkButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .gray
+   private lazy var checkButton: CustomButton = {
+        let button = CustomButton(title: "Enter", titleColor: .white, backgroundColor: .gray, backgroundImage: nil, onOrganizeTapButton: onOrganizeTapButton!)
+        //        button.backgroundColor = .gray
         button.layer.cornerRadius = 14
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowRadius = 4
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.7
-        button.addTarget(self, action: #selector(buttonTaped), for: .touchUpInside)
-        button.setTitle("Enter", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        //        button.addTarget(self, action: #selector(buttonTaped), for: .touchUpInside)
+        //        button.setTitle("Enter", for: .normal)
+        //        button.setTitleColor(.white, for: .normal)
         button.isEnabled = false
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    let checkTextField: UITextField = {
-        let textField = UITextField()
+    let checkTextField: CustomTextField = {
+        let textField = CustomTextField()
         textField.backgroundColor = .systemGray6
         textField.textColor = .black
         textField.autocapitalizationType = .none
@@ -50,8 +52,8 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        buttonTaped()
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         view.addSubview(checkButton)
         view.addSubview(checkTextField)
@@ -61,6 +63,7 @@ class FeedViewController: UIViewController {
         view.backgroundColor = .systemGreen
         navigationItem.title = "Feed"
         print(type(of: self), #function)
+        self.onModuleFinish?()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,22 +83,24 @@ class FeedViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    @objc func buttonTaped() {
-        CheckerModel.check(word: checkTextField.text) { result in
-            if result {
-                checkLabel.text = checkTextField.text
-                checkLabel.textColor = .green
-            } else {
-                checkLabel.text = checkTextField.text
-                checkLabel.textColor = .red
+     func buttonTaped() {
+       onOrganizeTapButton = { [weak self] in
+            guard let self = self else {return}
+        self.checkerModel.check(word: self.checkTextField.text) { result in
+                if result {
+                    self.checkLabel.text = self.checkTextField.text
+                    self.checkLabel.textColor = .green
+                } else {
+                    self.checkLabel.text = self.checkTextField.text
+                    self.checkLabel.textColor = .red
+                }
             }
         }
     }
-    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyBoardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -132,9 +137,9 @@ class FeedViewController: UIViewController {
         ]
         NSLayoutConstraint.activate(constraints)
     }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
     @objc func textFieldDidChange () {
         if checkTextField.text!.isEmpty {
             checkButton

@@ -1,12 +1,13 @@
 
 import Foundation
 
-var checkWord: String = "пароль"
+let checkWord: String = "123"
 
 public class CheckerModel {
-    static public func check(word: String?, completion: ((Bool) -> ())) {
+     public func check(word: String?, completion: ((Bool) -> ())) {
         completion(word == checkWord)
     }
+    public init() {}
 }
 
 
