@@ -15,10 +15,13 @@ class ProfileViewController: UIViewController {
     let cellIDPhotos = "CellIDPhotos"
     let allPosts = Storage.posts
     let photos = PhotosStorage.photos
+    private var imageProcessor : AsyncImageProcessor? = nil
+    private var images : [UIImage?]
     
     init(userService: UserService, userName: String ) {
         self.userService = userService
         self.userName = userName
+        self.images = Array(repeating: nil, count: Storage.posts.count)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,7 +34,23 @@ class ProfileViewController: UIViewController {
         setUpTableView()
         user = userService.returnUser(userName: userName)
     }
-
+    private func processImages() {
+        self.imageProcessor = AsyncImageProcessor(posts: Storage.posts,
+                                                  asyncResult: [], //???
+                                                  completion: {
+                                                    self.images = $0
+                                                    DispatchQueue.main.async {
+                                                        self.tableView.reloadData()
+                                                    }
+                                                  }
+        )
+        
+        self.imageProcessor?.start()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        processImages()
+    }
+    
     func setUpTableView() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +85,7 @@ extension ProfileViewController: UITableViewDataSource {
         if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIDPosts) as! PostTableViewCell
             cell.post = allPosts[indexPath.row]
+            cell.imagePostUIImageView.image = self.images[indexPath.row]
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIDPhotos) as! PhotosTableViewCell
