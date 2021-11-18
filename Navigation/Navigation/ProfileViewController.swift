@@ -13,15 +13,17 @@ class ProfileViewController: UIViewController {
     let tableView = UITableView(frame: .zero, style: .plain)
     let cellIDPosts = "CellIDPosts"
     let cellIDPhotos = "CellIDPhotos"
-    let allPosts = Storage.posts
+    var allPosts = Storage.posts
     let photos = PhotosStorage.photos
-    private var imageProcessor : AsyncImageProcessor? = nil
-    private var images : [UIImage?]
+//    private var imageProcessor : AsyncImageProcessor? = nil
+//    private var images : [UIImage?]
+    
+    var timer: Timer!
     
     init(userService: UserService, userName: String ) {
         self.userService = userService
         self.userName = userName
-        self.images = Array(repeating: nil, count: Storage.posts.count)
+//        self.images = Array(repeating: nil, count: Storage.posts.count)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,22 +35,34 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         setUpTableView()
         user = userService.returnUser(userName: userName)
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(reloadPosts), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer, forMode: .common)
     }
-    private func processImages() {
-        self.imageProcessor = AsyncImageProcessor(posts: Storage.posts,
-                                                  asyncResult: [], //???
-                                                  completion: {
-                                                    self.images = $0
-                                                    DispatchQueue.main.async {
-                                                        self.tableView.reloadData()
-                                                    }
-                                                  }
-        )
-        
-        self.imageProcessor?.start()
+    
+    @objc func reloadPosts() {
+        allPosts.shuffle()
+        tableView.reloadData()
     }
+    
+//    private func processImages() {
+//        self.imageProcessor = AsyncImageProcessor(posts: Storage.posts,
+//                                                  asyncResult: [], //???
+//                                                  completion: {
+//                                                    self.images = $0
+//                                                    DispatchQueue.main.async {
+//                                                        self.tableView.reloadData()
+//                                                    }
+//                                                  }
+//        )
+//
+//        self.imageProcessor?.start()
+//    }
     override func viewWillAppear(_ animated: Bool) {
-        processImages()
+//        processImages()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        timer.invalidate()
     }
     
     func setUpTableView() {
@@ -85,7 +99,7 @@ extension ProfileViewController: UITableViewDataSource {
         if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIDPosts) as! PostTableViewCell
             cell.post = allPosts[indexPath.row]
-            cell.imagePostUIImageView.image = self.images[indexPath.row]
+//            cell.imagePostUIImageView.image = self.images[indexPath.row]
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIDPhotos) as! PhotosTableViewCell

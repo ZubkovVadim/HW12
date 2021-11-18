@@ -10,6 +10,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
             photosUIImageView.image = photo
         }
     }
+    
     let photosUIImageView: UIImageView = {
     let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,5 +36,5 @@ class PhotosCollectionViewCell: UICollectionViewCell {
 extension PhotosCollectionViewCell {
     func setUpViews() {
         contentView.addSubview(photosUIImageView)
-    }
+}
 }
