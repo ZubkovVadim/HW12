@@ -1,7 +1,5 @@
 
 import Foundation
-import UIKit
-import WebKit
 
 public final class NetworkManager {
     private static let masterServiceURL: String = "https://swapi.dev/api"
@@ -32,6 +30,7 @@ public final class NetworkManager {
         dataTask.resume()
     }
 }
+
 
 
 

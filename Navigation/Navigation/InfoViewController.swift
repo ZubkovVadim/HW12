@@ -7,24 +7,49 @@
 //
 
 import UIKit
+import SnapKit
+import StorageService
 
 class InfoViewController: UIViewController {
-
+    private let networkManager = JSONNetworkManager()
+    
+    lazy var placeholdersLabel = UILabel()
+    lazy var planetLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupUI()
+        
+        executePlaceholders()
+        executePlanet()
     }
     
-    @IBAction func showAlert(_ sender: Any) {
-        let alertController = UIAlertController(title: "Удалить пост?", message: "Пост нельзя будет восстановить", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Отмена", style: .default) { _ in
-            print("Отмена")
+    private func setupUI() {
+        view.backgroundColor = .white
+        
+        view.addSubview(placeholdersLabel)
+        placeholdersLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview().offset(-50)
+            $0.centerX.equalToSuperview()
         }
-        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { _ in
-            print("Удалить")
+        
+        view.addSubview(planetLabel)
+        planetLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview().offset(50)
+            $0.centerX.equalToSuperview()
         }
-        alertController.addAction(cancelAction)
-        alertController.addAction(deleteAction)
-        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func executePlaceholders() {
+        networkManager.getPlaceholders { [weak self] arrayModels in
+            self?.placeholdersLabel.text = arrayModels.first?.title
+        }
+    }
+    
+    private func executePlanet() {
+        PlanetNetworkManager.executeRequest(configuration: .planets) { [weak self] planet in
+            self?.planetLabel.text = planet.orbitalPeriod
+        }
     }
 }
+

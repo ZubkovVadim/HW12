@@ -56,7 +56,8 @@ public final class GetStarshipsEndpoint: Endpoint {
 
 public final class GetPlanetsEndpoint: Endpoint {
     var method: RequestType { .get }
-    var path: String { "/api/planets/5" }
-    //    var queryItems: [URLQueryItem] { [URLQueryItem(name: "limit", value: "12")] }
+    var path: String { "/api/planets/1" }
+    var queryItems: [URLQueryItem] { [URLQueryItem(name: "format", value: "json")] }
 }
+
 
