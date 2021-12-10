@@ -72,6 +72,8 @@
 		DD8FAD01275E906600FD6611 /* JSONPlaceholderCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8FAD00275E906600FD6611 /* JSONPlaceholderCodable.swift */; };
 		DD8FAD03275E909300FD6611 /* JSONPlaceholderClassic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8FAD02275E909300FD6611 /* JSONPlaceholderClassic.swift */; };
 		DD8FAD05275E90BA00FD6611 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8FAD04275E90BA00FD6611 /* Planet.swift */; };
+		EFC980502763A36B007312CE /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC9804F2763A36B007312CE /* LoginService.swift */; };
+		EFC980522763A3AA007312CE /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC980512763A3AA007312CE /* ServiceFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +168,8 @@
 		DD8FAD04275E90BA00FD6611 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		DF63C3D9933A2F7EDD524636 /* Pods_Navigation_Debug.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Debug.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6C95789904D947B99954F26 /* Pods-Navigation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.debug.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.debug.xcconfig"; sourceTree = "<group>"; };
+		EFC9804F2763A36B007312CE /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		EFC980512763A3AA007312CE /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +272,8 @@
 			isa = PBXGroup;
 			children = (
 				DD47C84A2698DF6300911782 /* LogInViewController.swift */,
+				EFC9804F2763A36B007312CE /* LoginService.swift */,
+				EFC980512763A3AA007312CE /* ServiceFactory.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -581,6 +587,7 @@
 				DD8FACFD275E8FA400FD6611 /* JSONNetworkManager.swift in Sources */,
 				DD05CE7926A8793B007A187F /* PhotosTableViewCell.swift in Sources */,
 				DD05CE7C26A96754007A187F /* PhotosViewController.swift in Sources */,
+				EFC980502763A36B007312CE /* LoginService.swift in Sources */,
 				DD068F45269E197A007DA5B9 /* PostTableViewCell.swift in Sources */,
 				DD74D36E2729D06D00D752A2 /* ModelFactory.swift in Sources */,
 				DD786D80274FAEE400DD59AF /* NetworkManager.swift in Sources */,
@@ -598,6 +605,7 @@
 				DD160B38268B647E00B798A5 /* ProfileHeaderView.swift in Sources */,
 				DD74D36B27296B9C00D752A2 /* CoordinatorProtocols.swift in Sources */,
 				DD786D822755605900DD59AF /* Endpoint.swift in Sources */,
+				EFC980522763A3AA007312CE /* ServiceFactory.swift in Sources */,
 				DD05CE8026A97EA7007A187F /* PhotosCollectionViewCell.swift in Sources */,
 				060782B4250CE27700A87020 /* SceneDelegate.swift in Sources */,
 				DD160B3A268B64B700B798A5 /* ProfileViewController.swift in Sources */,

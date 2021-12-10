@@ -7,26 +7,38 @@ final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     let window: UIWindow
     
+    private let serviceFactory: ServiceFactory
+    private let moduleFactory: ModuleFactory
+    
     // MARK: - Init
+
     public init(window windowRoot: UIWindow) {
         tabBarController = UITabBarController()
         window = windowRoot
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
+        
+        self.serviceFactory = MyServiceFactory()
+        self.moduleFactory = ModuleFactory(serviceFactory: serviceFactory)
     }
-    private let modelFactory = ModelFactory()
+    
+
     func start() {
-        let loginCoordinator = LoginCoordinator(modelFactory: self.modelFactory)
+        let loginUnit = createLoginCoordinator()
         let feedCoordinator = FeedCoordinator()
         let infoViewController = createInfoViewController()
         
-        childCoordinators.append(loginCoordinator)
+        childCoordinators.append(loginUnit.coordinator)
         childCoordinators.append(feedCoordinator)
         
-        loginCoordinator.parentCoordinator = self
+        loginUnit.coordinator.parentCoordinator = self
+        
         feedCoordinator.parentCoordinator = self
-        loginCoordinator.start()
-        tabBarController.viewControllers = [feedCoordinator.navController, loginCoordinator.navController!, infoViewController]
+        loginUnit.coordinator.start()
+        
+        tabBarController.viewControllers = [feedCoordinator.navController,
+                                            loginUnit.controller,
+                                            infoViewController]
         
         let item1 = UITabBarItem(title: nil, image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         let item2 = UITabBarItem(title: nil, image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
@@ -34,7 +46,7 @@ final class AppCoordinator: Coordinator {
         infoViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 3)
         
         feedCoordinator.navController.tabBarItem = item1
-        loginCoordinator.navController?.tabBarItem = item2
+        loginUnit.controller.tabBarItem = item2
         
         
         //        feedCoordinator.start()
@@ -47,6 +59,17 @@ final class AppCoordinator: Coordinator {
         //           let loginController = loginNavigation.viewControllers.first as? LogInViewController {
         //            loginFactory = MyLoginFactory()
         //            loginController.delegate = loginFactory?.createLoginInspector() // экземпляр LoginInspector
+    }
+    
+    func createLoginCoordinator() -> (controller: UINavigationController,
+                                      coordinator: LoginCoordinator) {
+        let navigation = UINavigationController()
+        
+        let loginCoordinator = LoginCoordinator(navController: navigation,
+                                                moduleFactory: moduleFactory,
+                                                serviceFactory: serviceFactory)
+        
+        return (navigation, loginCoordinator)
     }
     
     func createInfoViewController() -> InfoViewController {

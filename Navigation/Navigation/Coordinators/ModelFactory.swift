@@ -9,24 +9,29 @@
 import Foundation
 import UIKit
 
-enum ModelTypes {
+enum ModuleTypes {
     case loginViewModel
     case feedViewModel
 }
 
-protocol ModelFactoryProtocol {
-    
-    func createModel(with type : ModelTypes, coordinator : Coordinator ) -> UIViewController
+protocol ModuleFactoryProtocol {
+    func createLogin(coordinator: LogInViewControllerOutput) -> LogInViewController
+    func createFeed(coordinator: Coordinator) -> FeedViewController
 }
 
-class ModelFactory: ModelFactoryProtocol {
-    func createModel(with type: ModelTypes, coordinator: Coordinator) -> UIViewController {
-        switch type {
-        case .loginViewModel :
-            return LogInViewController()
-        case .feedViewModel :
-            return FeedViewController()
-        }
+class ModuleFactory: ModuleFactoryProtocol {
+    private let serviceFactory: ServiceFactory
+    
+    init(serviceFactory: ServiceFactory) {
+        self.serviceFactory = serviceFactory
+    }
+    
+    func createLogin(coordinator: LogInViewControllerOutput) -> LogInViewController {
+        LogInViewController(output: coordinator, loginService: serviceFactory.createLoginService())
+    }
+    
+    func createFeed(coordinator: Coordinator) -> FeedViewController {
+        return FeedViewController()
     }
 }
 

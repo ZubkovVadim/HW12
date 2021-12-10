@@ -15,7 +15,7 @@ class FeedViewController: UIViewController{
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-   private lazy var checkButton: CustomButton = {
+    private lazy var checkButton: CustomButton = {
         let button = CustomButton(title: "Enter", titleColor: .white, backgroundColor: .gray, backgroundImage: nil, onOrganizeTapButton: onOrganizeTapButton!)
         //        button.backgroundColor = .gray
         button.layer.cornerRadius = 14
@@ -53,8 +53,6 @@ class FeedViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         buttonTaped()
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         view.addSubview(checkButton)
         view.addSubview(checkTextField)
         view.addSubview(checkLabel)
@@ -68,7 +66,6 @@ class FeedViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(notification:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -81,16 +78,13 @@ class FeedViewController: UIViewController{
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
-        
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-//
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self)
     }
-     func buttonTaped() {
-       onOrganizeTapButton = { [weak self] in
+    
+    func buttonTaped() {
+        onOrganizeTapButton = { [weak self] in
             guard let self = self else {return}
-        self.checkerModel.check(word: self.checkTextField.text) { result in
+            self.checkerModel.check(word: self.checkTextField.text) { result in
                 if result {
                     self.checkLabel.text = self.checkTextField.text
                     self.checkLabel.textColor = .green
@@ -137,9 +131,7 @@ class FeedViewController: UIViewController{
         ]
         NSLayoutConstraint.activate(constraints)
     }
-//    deinit {
-//        NotificationCenter.default.removeObserver(self)
-//    }
+
     @objc func textFieldDidChange () {
         if checkTextField.text!.isEmpty {
             checkButton

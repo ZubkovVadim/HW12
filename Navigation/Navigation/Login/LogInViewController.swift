@@ -1,14 +1,24 @@
 import UIKit
 import StorageService
 
+protocol LogInViewControllerOutput: AnyObject {
+    func didLogin(username: String)
+}
+
 class LogInViewController: UIViewController {
+    weak var output: LogInViewControllerOutput?
+    let loginService: LoginServing
     
-    weak var coordinator: LoginCoordinator?
-    var onModuleFinish: ((String) -> Void)?
-    
-    
-    weak var delegate: LogInViewControllerDelegate?
-    weak var checker: Checker?
+    init(output: LogInViewControllerOutput, loginService: LoginServing) {
+        self.output = output
+        self.loginService = loginService
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -29,6 +39,7 @@ class LogInViewController: UIViewController {
         logo.translatesAutoresizingMaskIntoConstraints = false
         return logo
     }()
+    
     private let userNameTextField: UITextField = {
         let emailOrPhoneTextField = UITextField()
         emailOrPhoneTextField.backgroundColor = .systemGray6
@@ -75,14 +86,16 @@ class LogInViewController: UIViewController {
         logInButton.setTitle("Log In", for: .normal)
         logInButton.setBackgroundImage(UIImage(named: "MyColor1"), for: .normal)
         logInButton.layer.cornerRadius = 10
-        logInButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+        logInButton.addTarget(self, action: #selector(tapLoginButton), for: .touchUpInside)
         logInButton.setTitleColor(.white, for: .normal)
         logInButton.translatesAutoresizingMaskIntoConstraints = false
-        logInButton.isEnabled = false
-        
+        logInButton.isEnabled = true
         return logInButton
     }()
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,7 +113,15 @@ class LogInViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        subscribeKeyboard()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func subscribeKeyboard() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(notification:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -109,15 +130,6 @@ class LogInViewController: UIViewController {
                                                selector: #selector(keyboardWillShow(notification:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -131,6 +143,7 @@ class LogInViewController: UIViewController {
         scrollView.contentInset.bottom = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
     }
+    
     override func viewWillLayoutSubviews() {
         let constrains = [
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -156,7 +169,6 @@ class LogInViewController: UIViewController {
             userNameTextField.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             userNameTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            
             passwordTextField.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor),
             passwordTextField.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             passwordTextField.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
@@ -169,30 +181,10 @@ class LogInViewController: UIViewController {
             logInButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -120)
         ]
         NSLayoutConstraint.activate(constrains)
-        
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    @objc func tap() {
-        #if Debug
-        let userService = TestUserService()
-        let vc = ProfileViewController(userService: userService , userName: userNameTextField.text!)
+
+    @objc func tapLoginButton() {
         
-        if delegate?.didTappedLoginButton(loginName: userNameTextField.text!, loginPassword: passwordTextField.text!) == true {
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            return
-        }
-        #else
-        if delegate?.didTappedLoginButton(loginName: userNameTextField.text!, loginPassword: passwordTextField.text!) == true {
-            onModuleFinish?(userNameTextField.text!)
-        } else {
-            return
-        }
-        #endif
     }
     
     @objc func textFieldDidChange () {
@@ -201,42 +193,5 @@ class LogInViewController: UIViewController {
         } else {
             logInButton.isEnabled = true
         }
-        
     }
 }
-
-class Checker {
-    static let shared = Checker()
-    
-    private let login: String = "1"
-    private let pswrd: String = "1"
-    
-    func check(userName: String, password: String) -> Bool {
-        return userName == login && password == pswrd
-    }
-    private init() {}
-}
-
-protocol LogInViewControllerDelegate: AnyObject {
-    func didTappedLoginButton (loginName: String, loginPassword: String) -> Bool
-    
-}
-
-class LoginInspector: LogInViewControllerDelegate {
-    func didTappedLoginButton(loginName: String, loginPassword: String) -> Bool {
-        let result = Checker.shared.check(userName: loginName, password: loginPassword)
-        return result
-    }
-}
-
-protocol LoginFactory {
-    func createLoginInspector() -> LoginInspector
-}
-
-class MyLoginFactory: LoginFactory {
-    let loginInspector = LoginInspector()
-    func createLoginInspector() -> LoginInspector {
-        return loginInspector
-    }
-}
-
