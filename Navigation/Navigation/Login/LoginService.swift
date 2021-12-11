@@ -7,13 +7,51 @@
 //
 
 import Foundation
+import Firebase
+
+enum LoginError: Error {
+    case nameNotFound
+    case alreadyInUse
+    case firebase(error: Error)
+}
 
 protocol LoginServing: AnyObject {
-    func ckeckLogin(username: String, password: String, result: @escaping (Bool) -> ())
+    func signIn(email: String, password: String, result: @escaping (Result<String, LoginError>) -> ())
+    func signUp(email: String, password: String, result: @escaping (Result<String, LoginError>) -> ())
 }
 
 class LoginService: LoginServing {
-    func ckeckLogin(username: String, password: String, result: @escaping (Bool) -> ()) {
-        // Firebase ..
+    func signIn(email: String, password: String, result: @escaping (Result<String, LoginError>) -> ()) {
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            if let error = error as NSError? {
+                result(.failure(.firebase(error: error)))
+                
+            } else if let name = authResult?.user.displayName ?? authResult?.user.email {
+                result(.success(name))
+                
+            } else {
+                result(.failure(.nameNotFound))
+            }
+        }
+    }
+    
+    func signUp(email: String, password: String, result: @escaping (Result<String, LoginError>) -> ()) {
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            if let error = error as NSError? {
+                switch error.code {
+                case AuthErrorCode.emailAlreadyInUse.rawValue:
+                    result(.failure(.alreadyInUse))
+
+                default:
+                    result(.failure(.firebase(error: error)))
+                }
+                
+            }else if let name = authResult?.user.displayName ?? authResult?.user.email {
+                result(.success(name))
+                
+            } else {
+                result(.failure(LoginError.nameNotFound))
+            }
+        }
     }
 }

@@ -72,6 +72,7 @@
 		DD8FAD01275E906600FD6611 /* JSONPlaceholderCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8FAD00275E906600FD6611 /* JSONPlaceholderCodable.swift */; };
 		DD8FAD03275E909300FD6611 /* JSONPlaceholderClassic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8FAD02275E909300FD6611 /* JSONPlaceholderClassic.swift */; };
 		DD8FAD05275E90BA00FD6611 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8FAD04275E90BA00FD6611 /* Planet.swift */; };
+		EF104C5A276503C200AB6756 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF104C59276503C200AB6756 /* GoogleService-Info.plist */; };
 		EFC980502763A36B007312CE /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC9804F2763A36B007312CE /* LoginService.swift */; };
 		EFC980522763A3AA007312CE /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC980512763A3AA007312CE /* ServiceFactory.swift */; };
 /* End PBXBuildFile section */
@@ -168,6 +169,7 @@
 		DD8FAD04275E90BA00FD6611 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		DF63C3D9933A2F7EDD524636 /* Pods_Navigation_Debug.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation_Debug.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6C95789904D947B99954F26 /* Pods-Navigation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.debug.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.debug.xcconfig"; sourceTree = "<group>"; };
+		EF104C59276503C200AB6756 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EFC9804F2763A36B007312CE /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		EFC980512763A3AA007312CE /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -244,6 +246,7 @@
 				060782B5250CE27700A87020 /* FeedViewController.swift */,
 				060782BA250CE27A00A87020 /* Assets.xcassets */,
 				060782BC250CE27A00A87020 /* LaunchScreen.storyboard */,
+				EF104C59276503C200AB6756 /* GoogleService-Info.plist */,
 				060782BF250CE27A00A87020 /* Info.plist */,
 				060782C5250CEB0A00A87020 /* InfoViewController.swift */,
 				DD74D36F272AF10B00D752A2 /* CustomTextField.swift */,
@@ -476,6 +479,7 @@
 			files = (
 				060782BE250CE27A00A87020 /* LaunchScreen.storyboard in Resources */,
 				060782BB250CE27A00A87020 /* Assets.xcassets in Resources */,
+				EF104C5A276503C200AB6756 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

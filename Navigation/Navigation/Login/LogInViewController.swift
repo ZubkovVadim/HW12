@@ -88,9 +88,33 @@ class LogInViewController: UIViewController {
         logInButton.layer.cornerRadius = 10
         logInButton.addTarget(self, action: #selector(tapLoginButton), for: .touchUpInside)
         logInButton.setTitleColor(.white, for: .normal)
+        logInButton.setTitleColor(.lightGray, for: .disabled)
         logInButton.translatesAutoresizingMaskIntoConstraints = false
-        logInButton.isEnabled = true
+        logInButton.isEnabled = false
         return logInButton
+    }()
+    
+    private let singUpButton: UIButton = {
+        let logInButton = UIButton(type: .system)
+        logInButton.layer.masksToBounds = true
+        logInButton.setTitle("Sing Up", for: .normal)
+        logInButton.setBackgroundImage(UIImage(named: "MyColor1"), for: .normal)
+        logInButton.layer.cornerRadius = 10
+        logInButton.addTarget(self, action: #selector(tapSingUpButton), for: .touchUpInside)
+        logInButton.setTitleColor(.white, for: .normal)
+        logInButton.setTitleColor(.lightGray, for: .disabled)
+        logInButton.translatesAutoresizingMaskIntoConstraints = false
+        logInButton.isEnabled = false
+        return logInButton
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [logInButton, singUpButton])
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.spacing = 8
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
     }()
     
     deinit {
@@ -106,9 +130,11 @@ class LogInViewController: UIViewController {
         containerView.addSubview(logoImageView)
         containerView.addSubview(userNameTextField)
         containerView.addSubview(passwordTextField)
-        containerView.addSubview(logInButton)
-        userNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        containerView.addSubview(stackView)
+        
+        userNameTextField.delegate = self
+        passwordTextField.delegate = self
+        
         navigationController?.navigationBar.isHidden = true
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -174,24 +200,119 @@ class LogInViewController: UIViewController {
             passwordTextField.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             passwordTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
-            logInButton.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
-            logInButton.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
-            logInButton.heightAnchor.constraint(equalToConstant: 50),
-            logInButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -120)
+            stackView.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
+            stackView.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: passwordTextField.trailingAnchor),
+            stackView.heightAnchor.constraint(equalToConstant: 50),
+            stackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -120)
         ]
         NSLayoutConstraint.activate(constrains)
     }
 
     @objc func tapLoginButton() {
-        
+        guard let email = userNameTextField.text,
+              let password = passwordTextField.text else {
+                  // Show error, need to fill fileds
+            return
+        }
+
+        loginService.signIn(email: email, password: password) { [weak self] result in
+            switch result {
+                
+            case let .success(name):
+                self?.output?.didLogin(username: name)
+                
+            case let .failure(error):
+//                self?.tapSingUpButton()
+                
+                
+                
+                print("Error login", error.localizedDescription)
+                self?.setErrorState()
+            }
+        }
     }
     
-    @objc func textFieldDidChange () {
-        if passwordTextField.text!.isEmpty || userNameTextField.text!.isEmpty {
-            logInButton.isEnabled = false
-        } else {
-            logInButton.isEnabled = true
+    @objc func tapSingUpButton() {
+        // sing
+        // show loader
+        // disable buttons
+        
+        guard let email = userNameTextField.text,
+              let password = passwordTextField.text else {
+            return
         }
+        
+        loginService.signUp(email: email, password: password) { [weak self] result in
+            switch result {
+                
+            case let .success(name):
+                self?.output?.didLogin(username: name)
+                
+            case let .failure(error):
+                
+                switch error {
+                case .nameNotFound:
+                    print("nameNotFound")
+                case .alreadyInUse:
+                    print("email is is use")
+                case let .firebase(error):
+                    print("Error login", error.localizedDescription)
+                }
+
+                self?.setErrorState()
+            }
+        }
+    }
+    
+    private func setErrorState() {
+        userNameTextField.layer.borderColor = UIColor.red.cgColor
+        passwordTextField.layer.borderColor = UIColor.red.cgColor
+    }
+    
+    private func setDefaultState() {
+        userNameTextField.layer.borderColor = UIColor.lightGray.cgColor
+        passwordTextField.layer.borderColor = UIColor.lightGray.cgColor
+    }
+}
+
+extension LogInViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("Tap return")
+        
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        var username = userNameTextField.text ?? ""
+        var password = passwordTextField.text ?? ""
+        var isEnabled = false
+        
+        if textField == userNameTextField {
+            username = username.replacing(range: range, string: string)
+            isEnabled = !username.isEmpty && !password.isEmpty
+            
+        } else if textField == passwordTextField {
+
+            password = password.replacing(range: range, string: string)
+            isEnabled = !username.isEmpty && !password.isEmpty
+        }
+        
+        logInButton.isEnabled = isEnabled
+        singUpButton.isEnabled = isEnabled
+        setDefaultState()
+        
+        return true
+    }
+}
+
+extension String {
+    func replacing(range: NSRange, string: String) -> String {
+        if let textRange = Range(range, in: self) {
+            return replacingCharacters(in: textRange, with: string)
+        }
+
+        return self
     }
 }
